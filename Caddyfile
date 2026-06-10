@@ -1,0 +1,3 @@
+pcmagus.hu, www.pcmagus.hu {
+    reverse_proxy web:3000
+}
