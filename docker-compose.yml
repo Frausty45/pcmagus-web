@@ -8,20 +8,10 @@ services:
     expose:
       - "3000"
 
-  caddy:
-    image: caddy:2-alpine
-    container_name: pcmagus-caddy
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: pcmagus-tunnel
     restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
     depends_on:
       - web
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-
-volumes:
-  caddy_data:
-  caddy_config:
