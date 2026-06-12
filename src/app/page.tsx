@@ -141,7 +141,7 @@ export default function Home() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[74%_center] opacity-[0.62] sm:object-[60%_center]"
+          className="object-cover object-[90%_center] opacity-[0.62] sm:object-[60%_center]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,4,10,0.98)_0%,rgba(5,4,10,0.86)_42%,rgba(5,4,10,0.46)_72%,rgba(52,30,110,0.24)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_48%,rgba(124,58,237,0.34),transparent_32%)]" />
