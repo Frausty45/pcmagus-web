@@ -1,12 +1,6 @@
-import type { Metadata } from "next";
-import BuildsPageContent from "./BuildsPageContent";
+import { redirect } from "next/navigation";
+import { defaultLanguage, localizedPath } from "../lib/i18n";
 
-export const metadata: Metadata = {
-  title: "Korábbi építések",
-  description:
-    "PCMagus korábbi PC építések és konfigurációk rövid bemutatója.",
-};
-
-export default function BuildsPage() {
-  return <BuildsPageContent />;
+export default function BuildsRedirectPage() {
+  redirect(localizedPath(defaultLanguage, "/builds"));
 }
