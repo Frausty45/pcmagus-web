@@ -325,7 +325,7 @@ export default function Home() {
             href="mailto:info@pcmagus.hu"
             className="mt-6 inline-flex h-12 items-center justify-center bg-white px-5 text-sm font-semibold text-zinc-950 transition hover:bg-zinc-200"
           >
-            hello@pcmagus.hu
+            info@pcmagus.hu
           </a>
         </div>
       </section>
