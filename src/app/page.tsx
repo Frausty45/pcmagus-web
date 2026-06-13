@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-
-type Language = "hu" | "en";
+import Link from "next/link";
+import LanguageToggle from "./components/LanguageToggle";
+import { useLanguage, type Language } from "./lib/language";
 
 const copy = {
   hu: {
@@ -20,6 +20,7 @@ const copy = {
       "PCMagus segít hibakeresésben, karbantartásban, bővítésben és egyedi PC építésben. Érthető magyarázat, tiszta munka, felesleges körök nélkül.",
     primaryCta: "Ajánlatot kérek",
     secondaryCta: "Szolgáltatások",
+    buildsCta: "Korábbi építések",
     highlights: [
       "Átlátható diagnózis",
       "Nincs felesleges alkatrészcsere",
@@ -58,10 +59,10 @@ const copy = {
     contactEyebrow: "Kapcsolat",
     contactTitle: "Írd le, mi a gond, vagy milyen gépet szeretnél.",
     contactIntro:
-      "A részletes űrlap és árkalkulátor később jön. Első körben elég egy rövid üzenet: milyen eszközről van szó, mi a tünet, és mennyire sürgős.",
-    contactCardTitle: "Induló kapcsolat",
+      "Küldj egy rövid leírást a hibáról, a géped állapotáról vagy az elképzelt konfigurációról. Minél több részletet írsz, annál gyorsabban lehet értelmes irányt mondani.",
+    contactCardTitle: "Emailes megkeresés",
     contactCard:
-      "Ide kerül majd az email, telefonszám vagy időpontfoglalás. Addig is ez a blokk jelzi, hogy a konverziós pont helye megvan.",
+      "Írd meg, milyen eszközről van szó, mit tapasztalsz, és ha tudod, milyen alkatrészek vannak benne. Fotót is küldhetsz, ha a hiba vagy a gép állapota látható.",
     imageAlt: "Saját építésű PC konfiguráció blurple világítással",
   },
   en: {
@@ -78,6 +79,7 @@ const copy = {
       "PCMagus helps with troubleshooting, maintenance, upgrades, and custom PC builds. Clear explanations, clean work, and no unnecessary loops.",
     primaryCta: "Request a quote",
     secondaryCta: "Services",
+    buildsCta: "Previous builds",
     highlights: [
       "Clear diagnostics",
       "No pointless part swaps",
@@ -116,21 +118,17 @@ const copy = {
     contactEyebrow: "Contact",
     contactTitle: "Tell me what is wrong, or what kind of PC you want.",
     contactIntro:
-      "A detailed form and price calculator will come later. For now, a short message is enough: device type, symptoms, and urgency.",
-    contactCardTitle: "Initial contact",
+      "Send a short description of the issue, the machine's condition, or the configuration you have in mind. The more context you include, the faster I can point you in the right direction.",
+    contactCardTitle: "Email contact",
     contactCard:
-      "Email, phone, or booking details will live here. For now, this block marks the conversion point cleanly.",
+      "Mention the device type, symptoms, and any known components. Photos are welcome if the issue or the machine's condition is visible.",
     imageAlt: "Custom-built PC setup with blurple lighting",
   },
 } satisfies Record<Language, Record<string, unknown>>;
 
 export default function Home() {
-  const [language, setLanguage] = useState<Language>("hu");
+  const { language, setLanguage } = useLanguage();
   const content = copy[language];
-
-  useEffect(() => {
-    document.documentElement.lang = language;
-  }, [language]);
 
   return (
     <main className="min-h-screen bg-[#05040a] text-zinc-100">
@@ -153,27 +151,11 @@ export default function Home() {
               <a href="#" className="text-lg font-semibold tracking-wide">
                 PCMagus
               </a>
-              <div
-                aria-label={content.switchLabel}
-                className="grid h-9 grid-cols-2 border border-violet-200/20 bg-black/35 p-1 text-xs font-semibold text-zinc-300 shadow-[0_0_24px_rgba(124,58,237,0.18)] backdrop-blur"
-                role="group"
-              >
-                {(["hu", "en"] as const).map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    aria-pressed={language === option}
-                    onClick={() => setLanguage(option)}
-                    className={`min-w-10 px-3 transition ${
-                      language === option
-                        ? "bg-violet-400 text-white"
-                        : "hover:bg-violet-300/10 hover:text-white"
-                    }`}
-                  >
-                    {option.toUpperCase()}
-                  </button>
-                ))}
-              </div>
+              <LanguageToggle
+                language={language}
+                label={content.switchLabel}
+                onChange={setLanguage}
+              />
             </div>
 
             <nav
@@ -216,6 +198,12 @@ export default function Home() {
                 >
                   {content.secondaryCta}
                 </a>
+                <Link
+                  href="/builds"
+                  className="inline-flex h-12 items-center justify-center border border-violet-200/[0.22] px-6 text-sm font-semibold text-white transition hover:border-violet-200/[0.45] hover:bg-violet-300/[0.10]"
+                >
+                  {content.buildsCta}
+                </Link>
               </div>
             </div>
           </div>
